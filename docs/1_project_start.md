@@ -539,7 +539,7 @@ $ git commit -m "user仓库建立，数据持久化"
 
 （先别管那红色的大长条文件...等下会修复）
 
-就是说 `components.d.ts` 在归并后会被覆写，要挪走。挪走后再执行，接看到了消失的代码
+就是说 `components.d.ts` 在归并后会被覆写，要挪走。挪走后再执行，然后就找回了迷失的代码（虽然它们一直在那儿）
 
 然后又出现了成片的绿色，成片的红色...
 绿色的提示，你回归到了之前保存的状态时，这些即将被提交的更改被列出
@@ -547,7 +547,22 @@ $ git commit -m "user仓库建立，数据持久化"
 
 红色的提示，表示更改过但还没有add
 ![alt text](./assets/image10.png)
-这些是红色的md文件是 `Local History` 插件生成的，我不想让这些文件届时也被上传到github，
+这些是红色的md文件是 `Local History` 插件生成的，他们共同属于 `.history` 目录 ，我不想让这些文件届时也被上传到github
+
+由于 `.history` 已经被cached，所以如果直接把他加入 `.gitignore` ，并不会生效，应先从cached移除
+
+```bash
+git rm -r .history
+```
+
+发现是 `eslint.config.js` 文件的配置有问题，导致了commmit失败
+
+## pinia实例抽取
+
+> 封装pinia相关内容：创建、持久化
+
+`stores/index.ts`
+
 
 ## 工具函数泛型封装
 

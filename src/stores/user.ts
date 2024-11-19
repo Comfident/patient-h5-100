@@ -1,10 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-<<<<<<< Updated upstream
-import type { User } from '../type/user'
-=======
 import type { User } from '../types/user'
->>>>>>> Stashed changes
 
 export const useUserStore = defineStore(
 	'cp-user',
