@@ -7,16 +7,57 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css">
 </head>
 <body>
   <div id="app"></div>
   <script>
-    window.$docsify = {
-      name: '',
-      repo: ''
-    }
+window.$docsify = {
+    name: '',
+    repo: '',
+    markdown: {
+        renderer:{
+            code: function(code, lang) {
+                if(lang =='html'){
+                    code = code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+                }
+                return ('<pre data-lang="'+lang+'"><code class="line-numbers language-'+lang+'">'+code+'</code></pre>')
+            }
+        }	  
+    },
+    plugins: [
+        function (hook, vm) {
+            hook.doneEach(function (html) {                
+                Prism.highlightAll();
+            })
+        }
+    ]
+
+}
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <style>
+   .markdown-section pre > code {
+      padding: 4px;
+   }
+   .markdown-section pre[data-lang] {
+      overflow: auto !important;
+   }
+
+   .markdown-section pre[data-lang] code {
+      overflow: visible;
+   }
+
+   .line-numbers .line-numbers-rows {
+      border-right : 0px solid white;
+      /* Fix paddings to align with code.*/
+      padding: 5px; /* Same as code block */
+   }
+  </style>
 </body>
 </html>

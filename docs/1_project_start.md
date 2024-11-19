@@ -2,7 +2,7 @@
 
 # 项目起步
 
-##  配置npm源
+## 配置npm源
 
 在终端运行下面命令，切换为淘宝源
 
@@ -11,7 +11,6 @@ npm config set registry https://registry.npmmirror.com/
 ```
 
 <hr>
-
 
 ## 创建vue项目
 
@@ -46,7 +45,7 @@ Vue.js - The Progressive JavaScript Framework
   pnpm dev
 ```
 
-## 创建文档 
+## 创建文档
 
 此处使用[docify](https://docsify.js.org/#/zh-cn/quickstart)记录文档，详见文档
 
@@ -62,8 +61,13 @@ npm i docsify-cli -g
 docsify init ./docs
 ```
 
-<hr>
+启动文档
 
+```bash
+docsify serve docs
+```
+
+<hr>
 
 ## 配置ESLint
 
@@ -83,32 +87,31 @@ pnpm install --save-dev eslint eslint-plugin-vue
 ```js
 import pluginVue from 'eslint-plugin-vue'
 export default [
-  ...pluginVue.configs['flat/recommended'],
-  {
-    rules: {
-      'vue/no-unused-vars': 'error',
+	...pluginVue.configs['flat/recommended'],
+	{
+		rules: {
+			'vue/no-unused-vars': 'error',
 
-      // 组件名称始终为多个单词，否则报警告
-      'vue/multi-word-component-names': [
-        'warn',
-        {
-          // 忽略index组件名，允许存在
-          ignores: ['index'],
-        },
-      ],
-      // 禁止使用导致传递给 setup 的 props 失去响应性的用法
-      // 原方法为 vue/no-setup-props-destructure 现已弃用
-      'vue/no-setup-props-reactivity-loss': ['off'],
+			// 组件名称始终为多个单词，否则报警告
+			'vue/multi-word-component-names': [
+				'warn',
+				{
+					// 忽略index组件名，允许存在
+					ignores: ['index']
+				}
+			],
+			// 禁止使用导致传递给 setup 的 props 失去响应性的用法
+			// 原方法为 vue/no-setup-props-destructure 现已弃用
+			'vue/no-setup-props-reactivity-loss': ['off'],
 
-      // 未定义变量，报错
-      'no-undef': 'error',
-    },
-  },
+			// 未定义变量，报错
+			'no-undef': 'error'
+		}
+	}
 ]
 ```
 
 <hr>
-
 
 ## 配置prettier
 
@@ -117,10 +120,10 @@ export default [
 
 ```json
 {
-  "$schema": "https://json.schemastore.org/prettierrc",
-  "semi": false,
-  "singleQuote": true,
-  "printWidth": 100
+	"$schema": "https://json.schemastore.org/prettierrc",
+	"semi": false,
+	"singleQuote": true,
+	"printWidth": 100
 }
 ```
 
@@ -140,9 +143,11 @@ pnpm i lint-staged -D
 
 配置`package.json`
 
-![alt text](image.png)
+![package.json中配置lint-staged](./assets/image.png)
 
 将`.husky`目录下的`pre-commit`文件中的`npm test`改为`pnpm lint-staged`
+
+![npm test 改为 pnpm lint-staged](./assets/image1.png)
 
 ## 调整项目结构
 
@@ -229,7 +234,20 @@ export default defineConfig({
 
 随后我们在`vue.app`中导入一个`van-button`进行测试，成功：
 
-![alt text](image-1.png)
+![效果展示](./assets/image2.png)
+
+此时main.ts会有一个报错：
+`无法找到模块“./App.vue”的声明文件。“c:/Users/ZZX/Desktop/gcyh3/patients-h5-100/src/App.vue”隐式拥有 "any" 类型。`
+
+原因是ts不识别.vue文件
+
+在`env.d.ts`（无则创建）输入以下内容：
+
+```typescript
+/// <reference types="vite/client" />
+
+declare module '*.vue'
+```
 
 ## 移动端适配——vw
 
@@ -251,86 +269,285 @@ module.exports = {
     },
   },
 };
-
 ```
 
 ## 主题色
 
 在style/main.css中配置：
 
-```
+```css
 :root {
-  /*
-   * 问诊患者：色板
-   * 以下定义了一系列的颜色变量，用于设置网页的不同颜色部分。
-   * 这些变量可以被页面中的其他CSS规则引用，以保持颜色的一致性。
-   */
-  /* 浅色背景，可能用于卡片或弹窗的背景 */
-  --cp-plain: #eaf8f6;
+	/* 定义一系列颜色变量，用于问诊患者的界面设计 */
 
-  /* 橙色，可能用于警告或需要用户注意的元素 */
-  --cp-orange: #fca21c;
+	/* 主要颜色，通常用于重要按钮或链接 */
+	--cp-primary: #16c2a3;
 
-  /* 文本颜色1，深色，可能用于标题或重要文本 */
-  --cp-text1: #121826;
+	/* 简单背景颜色，可能用于轻量级容器或卡片 */
+	--cp-plain: #eaf8f6;
 
-  /* 文本颜色2，中等深浅，可能用于副标题或次重要文本 */
-  --cp-text2: #3c3e42;
+	/* 橙色，可能用于警告或需要用户注意的元素 */
+	--cp-orange: #fca21c;
 
-  /* 文本颜色3，浅色，可能用于正文或普通文本 */
-  --cp-text3: #6f6f6f;
+	/* 文本颜色1，通常用于最重要的标题或文本 */
+	--cp-text1: #121826;
 
-  /* 标签颜色，可能用于分类标签或小号文本 */
-  --cp-tag: #848484;
+	/* 文本颜色2，可能用于副标题或次要文本 */
+	--cp-text2: #3c3e42;
 
-  /* 深色，可能用于边框或分割线 */
-  --cp-dark: #979797;
+	/* 文本颜色3，可能用于辅助信息或小号文本 */
+	--cp-text3: #6f6f6f;
 
-  /* 提示颜色，可能用于辅助说明或提示文本 */
-  --cp-tip: #c3c3c5;
+	/* 标签颜色，可能用于分类标签或小图标文字 */
+	--cp-tag: #848484;
 
-  /* 禁用状态颜色，可能用于不可点击的按钮或禁用状态的文本 */
-  --cp-disable: #d9dbde;
+	/* 深色色调，可能用于分隔线或次级按钮 */
+	--cp-dark: #979797;
 
-  /* 分隔线颜色，可能用于元素之间的分隔线 */
-  --cp-line: #ededed;
+	/* 提示颜色，可能用于提示性文字或图标 */
+	--cp-tip: #c3c3c5;
 
-  /* 背景颜色，可能用于页面背景或大块区域的背景 */
-  --cp-bg: #f6f7f9;
+	/* 禁用状态颜色，用于表示不可点击或不可用的元素 */
+	--cp-disable: #d9dbde;
 
-  /* 价格颜色，可能用于显示价格或促销信息 */
-  --cp-price: #eb5757;
+	/* 分隔线颜色，用于划分不同内容区域 */
+	--cp-line: #ededed;
 
-  /*
-   * 覆盖vant主体色
-   * vant是一个基于Vue.js的移动端UI组件库，这里通过设置自定义属性
-   * --van-primary-color 来覆盖vant组件库的默认主要颜色。
-   */
-  --van-primary-color: var(--cp-primary);
+	/* 背景颜色，用于页面或组件的背景 */
+	--cp-bg: #f6f7f9;
+
+	/* 价格颜色，用于显示价格信息 */
+	--cp-price: #eb5757;
+
+	/* 覆盖vant UI库的主要颜色，将其设置为自定义的主要颜色 */
+	--van-primary-color: var(--cp-primary);
 }
-/* 添加这段样式后，Primary Button 会变成红色 */
-:root:root {
-  /* 主要颜色，通常用于重要按钮或突出显示的元素 */
-  --van-button-primary-background: #16c2a3;
-}
-
 ```
 
-测试结果
-![alt text](image-2.png)
+测试代码：
+
+```vue
+<script setup lang="ts"></script>
+
+<template>
+	<!-- 测试vant颜色覆盖是否生效 -->
+	<van-button type="primary">你好</van-button>
+	<a href="#">你好</a>
+</template>
+
+<style scoped lang="scss">
+a {
+	color: var(--cp-primary);
+}
+</style>
+```
+
+测试发现没有生效，但是我们明明已经在`main.scss`修改了`--van-primary-color`，怎么回事呢？
+
+![测试发现未生效](./assets/image3.png)
+
+查阅按钮样式的时候，发现`--van-primary-color`确实没有生效
+
+![--van-primary-color删除线](./assets/image4.png)
+
+为了解决这个问题，我在`--van-primary-color`后增加了`!important`
+
+```scss
+/* 覆盖vant UI库的主要颜色，将其设置为自定义的主要颜色 */
+--van-primary-color: var(--cp-primary) !important;
+```
 
 ## 用户状态仓库
 
-完成：用户信息仓库创建，提供用户信息，修改用信息，删除用户信息的方法
+> 目标：建立用户信息仓库
 
-请求工具需要携带token，访问权限控制需要token，所以用户信息仓库先完成
-需求：
+后期发送请求时，需要携带用户的token，故先实现用户状态仓库
 
-用户信息仓库创建
-提供用户信息
-修改用信息的方法
-删除用信息的方法
-代码：
+用户状态仓库需求：
+
+- 存储用户信息
+- 设置用户信息
+- 清空用户信息
+
+在存储用户信息之前，我们定义一个**用户信息数据类型：**`user.d.ts`
+
+`types/user.d.ts`
+
+```typescript
+export type User = {
+	token: string // 令牌
+	id: string // 用户ID
+	account: string // 用户名
+	mobile: string // 手机号
+	avatar: string // 头像URL
+}
+```
+
+关于对用户信息的具体操作（存储、设置、清空），我们定义一个用户管理 store
+
+`stores/user.ts`
+
+```typescript
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+import type { User } from '@/types/user'
+
+export const useUserStore = defineStore('cp-user', () => {
+	// 存储当前用户状态
+	const user = ref<User>()
+
+	// 设置用户信息
+	const setUser = (u: User) => {
+		user.value = u
+	}
+
+	// 清空用户状态
+	const delUser = () => {
+		user.value = undefined
+	}
+
+	return { user, setUser, delUser }
+})
+```
+
+别忘了返回 store 中的状态和方法，否则其他组件无法通过 useUserStore 函数调用
+
+## 数据持久化
+
+> 使用 `pinia-plugin-persistedstate` 实现pinia仓库状态持久化
+
+安装 `pinia-plugin-persistedstate`
+
+```bash
+pnpm i pinia-plugin-persistedstate
+```
+
+在 `main.ts` 中导入 `pinia-plugin-persistedstate`
+
+![导入 pinia-plugin-persistedstate](./assets/image5.png)
+
+别忘了在 `stores/user.ts` 中新增 `persist` 为 `true`
+
+```typescript
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+import type { User } from '@/types/user'
+
+export const useUserStore = defineStore(
+	'cp-user',
+	() => {
+		// 存储当前用户状态
+		const user = ref<User>()
+
+		// 设置用户信息
+		const setUser = (u: User) => {
+			user.value = u
+		}
+
+		// 清空用户状态
+		const delUser = () => {
+			user.value = undefined
+		}
+
+		return { user, setUser, delUser }
+	},
+	// 持久化
+	{
+		persist: true
+	}
+)
+```
+
+在 `App.vue` 中测试持久化
+
+```html
+<script setup lang="ts">
+import { useUserStore } from './stores/user'
+const store = useUserStore()
+</script>
+
+<template>
+	<p>{{ store.user }}</p>
+	<button
+		@click="store.setUser({ id: '11', mobile: '12', account: '13', avatar: '14', token: '15' })">
+		登录
+	</button>
+	<button @click="store.delUser()">退出</button>
+</template>
+```
+
+功能测试
+
+![测试登录](./assets/image6.png)
+
+![测试退出](./assets/image7.png)
+
+# husky提交，代码突然全都没了！！！！！
+本想在提交之前用husky规避掉不规范的提交，有报错告诉我哪里错了，我去改
+
+没成想一看资源管理器，新写的代码都没了，本地项目好像自动回退到了上一个commit ......
+
+#### 有问题，应该好好看报错...  这里只放出 lint-staged 部分
+
+```bash
+ZZX@DESKTOP-EVVUA5G MINGW64 ~/Desktop/gcyh3/patients-h5-100 (main)
+$ git commit -m "user仓库建立，数据持久化"
+
+> patients-h5-100@0.0.0 lint-staged C:\Users\ZZX\Desktop\gcyh3\patients-h5-100
+> lint-staged
+
+✔ Preparing lint-staged...
+⚠ Running tasks for staged files...
+  ↓ package.json — no tasks to run
+  ↓ package.json — no tasks to run
+  ↓ package.json — no tasks to run
+  ↓ package.json — no tasks to run
+  ↓ package.json — no tasks to run
+  ❯ package.json — 44 files (chunk 6/9)...
+    ❯ *.{js,ts,vue} — 11 files
+      ✖ eslint --fix [FAILED]
+  ❯ package.json — 44 files (chunk 7/9)...
+    ❯ *.{js,ts,vue} — 44 files
+      ✖ eslint --fix [FAILED]
+  ✔ package.json — 44 files (chunk 8/9)...
+  ❯ package.json — 44 files (chunk 9/9)...
+    ❯ *.{js,ts,vue} — 21 files
+      ✖ eslint --fix [FAILED]
+↓ Skipped because of errors from tasks.
+✖ <stdin>:162: trailing whitespace.
+## 创建文档
+<stdin>:530: trailing whitespace.
+## 创建文档
+<stdin>:898: trailing whitespace.
+## 创建文档
+<stdin>:1266: t…
+↓
+  ✖ lint-staged failed due to a git error.
+
+  ✖ lint-staged failed due to a git error.
+  Any lost modifications can be restored from a git stash:
+
+    > git stash list
+    stash@{0}: automatic lint-staged backup
+    > git stash apply --index stash@{0}
+```
+在最后，日志最后提供了恢复可能丢失的修改的建议。
+开发者可以通过 Git 命令 `git stash list` 查看保存的更改，并通过 `git stash apply --index stash@{0}` 命令恢复这些更改。
+
+但是直接执行 `git stash pop` 出现了报错：
+
+![git stash pop 报错](./assets/image8.png)
+
+（先别管那红色的大长条文件...等下会修复）
+
+就是说 `components.d.ts` 在归并后会被覆写，要挪走。挪走后再执行，接看到了消失的代码
+
+然后又出现了成片的绿色，成片的红色...
+绿色的提示，你回归到了之前保存的状态时，这些即将被提交的更改被列出
+![alt text](./assets/image9.png)
+
+红色的提示，表示更改过但还没有add
+![alt text](./assets/image10.png)
+这些是红色的md文件是 `Local History` 插件生成的，我不想让这些文件届时也被上传到github，
 
 ## 工具函数泛型封装
 

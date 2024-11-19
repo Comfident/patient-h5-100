@@ -11,5 +11,6 @@
   "htmlWhitespaceSensitivity": "ignore",
   "vueIndentScriptAndStyle": false,
   "endOfLine": "auto",
-  "singleAttributePerLine": false
+  "singleAttributePerLine": false,
+  "trailingWhitespace": "none"
 }
