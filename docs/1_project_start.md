@@ -363,6 +363,8 @@ a {
 后期发送请求时，需要携带用户的token，故先实现用户状态仓库
 
 用户状态仓库需求：
+<<<<<<< Updated upstream
+=======
 
 - 存储用户信息
 - 设置用户信息
@@ -461,8 +463,8 @@ export const useUserStore = defineStore(
 
 ```html
 <script setup lang="ts">
-import { useUserStore } from './stores/user'
-const store = useUserStore()
+	import { useUserStore } from './stores/user'
+	const store = useUserStore()
 </script>
 
 <template>
@@ -482,11 +484,12 @@ const store = useUserStore()
 ![测试退出](./assets/image7.png)
 
 # husky提交，代码突然全都没了！！！！！
+
 本想在提交之前用husky规避掉不规范的提交，有报错告诉我哪里错了，我去改
 
 没成想一看资源管理器，新写的代码都没了，本地项目好像自动回退到了上一个commit ......
 
-#### 有问题，应该好好看报错...  这里只放出 lint-staged 部分
+#### 有问题，应该好好看报错... 这里只放出 lint-staged 部分
 
 ```bash
 ZZX@DESKTOP-EVVUA5G MINGW64 ~/Desktop/gcyh3/patients-h5-100 (main)
@@ -530,6 +533,213 @@ $ git commit -m "user仓库建立，数据持久化"
     stash@{0}: automatic lint-staged backup
     > git stash apply --index stash@{0}
 ```
+
+在最后，日志最后提供了恢复可能丢失的修改的建议。
+开发者可以通过 Git 命令 `git stash list` 查看保存的更改，并通过 `git stash apply --index stash@{0}` 命令恢复这些更改。
+
+但是直接执行 `git stash pop` 出现了报错：
+
+![git stash pop 报错](./assets/image8.png)
+
+（先别管那红色的大长条文件...等下会修复）
+
+就是说 `components.d.ts` 在归并后会被覆写，要挪走。挪走后再执行，接看到了消失的代码
+
+然后又出现了成片的绿色，成片的红色...
+绿色的提示，你回归到了之前保存的状态时，这些即将被提交的更改被列出
+![alt text](./assets/image9.png)
+
+红色的提示，表示更改过但还没有add
+![alt text](./assets/image10.png)
+这些是红色的md文件是 `Local History` 插件生成的，我不想让这些文件届时也被上传到github，
+
+> > > > > > > Stashed changes
+
+- 存储用户信息
+- 设置用户信息
+- 清空用户信息
+
+在存储用户信息之前，我们定义一个**用户信息数据类型：**`user.d.ts`
+
+`types/user.d.ts`
+
+```typescript
+export type User = {
+	// 令牌
+	token: string
+
+	// 用户ID
+	id: string
+
+	// 用户名
+	account: string
+
+	// 手机号
+	mobile: string
+
+	// 头像URL
+	avatar: string
+
+	// 账户
+	account: string
+
+	// 刷新令牌
+	refreshToken: string
+
+	token: string
+}
+```
+
+关于对用户信息的具体操作（存储、设置、清空），我们定义一个用户管理 store
+
+`stores/user.ts`
+
+```typescript
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+import type { User } from '@/types/user'
+
+export const useUserStore = defineStore('cp-user', () => {
+	// 存储当前用户状态
+	const user = ref<User>()
+
+	// 设置用户信息
+	const setUser = (u: User) => {
+		user.value = u
+	}
+
+	// 清空用户状态
+	const delUser = () => {
+		user.value = undefined
+	}
+
+	return { user, setUser, delUser }
+})
+```
+
+别忘了返回 store 中的状态和方法，否则其他组件无法通过 useUserStore 函数调用
+
+## 数据持久化
+
+> 使用 `pinia-plugin-persistedstate` 实现pinia仓库状态持久化
+
+安装 `pinia-plugin-persistedstate`
+
+```bash
+pnpm i pinia-plugin-persistedstate
+```
+
+在 `main.ts` 中导入 `pinia-plugin-persistedstate`
+
+![导入 pinia-plugin-persistedstate](./assets/image5.png)
+
+别忘了在 `stores/user.ts` 中新增 `persist` 为 `true`
+
+```typescript
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+import type { User } from '@/types/user'
+
+export const useUserStore = defineStore(
+	'cp-user',
+	() => {
+		// 存储当前用户状态
+		const user = ref<User>()
+
+		// 设置用户信息
+		const setUser = (u: User) => {
+			user.value = u
+		}
+
+		// 清空用户状态
+		const delUser = () => {
+			user.value = undefined
+		}
+
+		return { user, setUser, delUser }
+	},
+	// 持久化
+	{
+		persist: true
+	}
+)
+```
+
+在 `App.vue` 中测试持久化
+
+```html
+<script setup lang="ts">
+	import { useUserStore } from './stores/user'
+	const store = useUserStore()
+</script>
+
+<template>
+	<p>{{ store.user }}</p>
+	<button
+		@click="store.setUser({ id: '11', mobile: '12', account: '13', avatar: '14', token: '15' })">
+		登录
+	</button>
+	<button @click="store.delUser()">退出</button>
+</template>
+```
+
+功能测试
+
+![测试登录](./assets/image6.png)
+
+![测试退出](./assets/image7.png)
+
+# husky提交，代码突然全都没了！！！！！
+
+本想在提交之前用husky规避掉不规范的提交，有报错告诉我哪里错了，我去改
+
+没成想一看资源管理器，新写的代码都没了，本地项目好像自动回退到了上一个commit ......
+
+#### 有问题，应该好好看报错... 这里只放出 lint-staged 部分
+
+```bash
+ZZX@DESKTOP-EVVUA5G MINGW64 ~/Desktop/gcyh3/patients-h5-100 (main)
+$ git commit -m "user仓库建立，数据持久化"
+
+> patients-h5-100@0.0.0 lint-staged C:\Users\ZZX\Desktop\gcyh3\patients-h5-100
+> lint-staged
+
+✔ Preparing lint-staged...
+⚠ Running tasks for staged files...
+  ↓ package.json — no tasks to run
+  ↓ package.json — no tasks to run
+  ↓ package.json — no tasks to run
+  ↓ package.json — no tasks to run
+  ↓ package.json — no tasks to run
+  ❯ package.json — 44 files (chunk 6/9)...
+    ❯ *.{js,ts,vue} — 11 files
+      ✖ eslint --fix [FAILED]
+  ❯ package.json — 44 files (chunk 7/9)...
+    ❯ *.{js,ts,vue} — 44 files
+      ✖ eslint --fix [FAILED]
+  ✔ package.json — 44 files (chunk 8/9)...
+  ❯ package.json — 44 files (chunk 9/9)...
+    ❯ *.{js,ts,vue} — 21 files
+      ✖ eslint --fix [FAILED]
+↓ Skipped because of errors from tasks.
+✖ <stdin>:162: trailing whitespace.
+## 创建文档
+<stdin>:530: trailing whitespace.
+## 创建文档
+<stdin>:898: trailing whitespace.
+## 创建文档
+<stdin>:1266: t…
+↓
+  ✖ lint-staged failed due to a git error.
+
+  ✖ lint-staged failed due to a git error.
+  Any lost modifications can be restored from a git stash:
+
+    > git stash list
+    stash@{0}: automatic lint-staged backup
+    > git stash apply --index stash@{0}
+```
+
 在最后，日志最后提供了恢复可能丢失的修改的建议。
 开发者可以通过 Git 命令 `git stash list` 查看保存的更改，并通过 `git stash apply --index stash@{0}` 命令恢复这些更改。
 
@@ -557,14 +767,115 @@ git rm -r .history
 
 发现是 `eslint.config.js` 文件的配置有问题，导致了commmit失败
 
+## 突然来的报错
+
+emmm，能正常运行，要不先不管了.....
+
+![alt text](assets/image10.png)
+
 ## pinia实例抽取
 
 > 封装pinia相关内容：创建、持久化
 
-`stores/index.ts`
+新建 `stores/index.ts`
 
+```ts
+import { createPinia } from 'pinia'
+import persist from 'pinia-plugin-persistedstate'
 
-## 工具函数泛型封装
+// pinia 实例创建
+const pinia = createPinia()
+
+// 持久化
+pinia.use(persist)
+
+// 导出
+export default pinia
+```
+
+重构 `main.ts`
+
+```ts
+import { createApp } from 'vue'
+import './styles/main.scss'
+import App from './App.vue'
+import router from './router'
+import pinia from './stores/index'
+const app = createApp(App)
+
+app.use(pinia)
+app.use(router)
+
+app.mount('#app')
+```
+
+## 请求、响应拦截器配置
+
+> 请求拦截器，带上token
+
+`utils/request.ts`
+
+```ts
+import { useUserStore } from '@/stores'
+import router from '@/router'
+import axios from 'axios'
+import { showToast } from 'vant'
+
+const baseURL = 'https://consult-api.itheima.net/'
+
+// 1. axios实例，基础配置
+const instance = axios.create({
+	baseURL: baseURL,
+	timeout: 10000
+})
+
+// 2. 请求拦截器给config携带token
+instance.interceptors.request.use(
+	(config) => {
+		const store = useUserStore()
+		if (store.user?.token && config.headers) {
+			// 用户存在且有token 且 config有headers，则给headers新增属性Authorization
+			config.headers['Authorization'] = `Bearer ${store.user?.token}`
+		}
+		return config
+	},
+	(err) => Promise.reject(err)
+)
+```
+
+> 响应拦截器
+
+```ts
+// 3. 响应拦截器，剥离无效数据，401拦截
+instance.interceptors.response.use(
+	(res) => {
+		// 后台约定，响应成功，但是code不是10000，是业务逻辑失败
+		if (res.data?.code !== 10000) {
+			showToast(res.data?.message || '业务失败')
+			return Promise.reject(res.data)
+		}
+		// 业务逻辑成功，返回响应数据，作为axios成功的结果
+		return res.data
+	},
+	(err) => {
+		if (err.response.status === 401) {
+			// 删除用户信息
+			const store = useUserStore()
+			store.delUser()
+			// 跳转登录，带上接口失效所在页面的地址，登录完成后回跳使用
+			router.push({
+				path: '/login',
+				query: { returnUrl: router.currentRoute.value.fullPath }
+			})
+		}
+		return Promise.reject(err)
+	}
+)
+
+export { baseURL, instance }
+```
+
+## 工具函数封装
 
 ```
 type Data<T> = {
@@ -592,3 +903,45 @@ const request = <T>(url: string, method: Method = 'get', submitData?: object) =>
 Data<T>为一泛型类型对象,这里的`const request = <T>(url: string, method: Method = 'get', submitData?: object)`中的T指代你期望从请求返回的数据类型。这意味着当你调用这个函数时，你可以指定你期望从服务器接收的数据类型。
 
 说实话,我是不知道为啥要写成request<T, Data<T>>,直接写成<Data<T>>也行啊
+<<<<<<< Updated upstream
+
+## 请求工具测试
+
+> 要搞清楚业务逻辑：先 获取用户信息 再 登录。（我还纳闷咋一直401...）
+
+```ts
+<script setup lang="ts">
+import { Button } from 'vant'
+import type { User } from '@/types/user'
+import { request } from '@/utils/request'
+import { useUserStore } from '@/stores/index'
+
+const store = useUserStore()
+const getUserInfo = async () => {
+	const res = await request('/patient/myUser', 'get')
+	console.log('getUserInfo')
+	console.log(res)
+}
+
+const login = async () => {
+	const res = await request<User>('/login/password', 'post', {
+		// 测试手机号与密码
+		mobile: '13211112222',
+		password: 'abc12345'
+	})
+
+	// 这里需要 <User> 的类型断言，否则有语法错误
+	store.setUser(res.data)
+}
+</script>
+
+<template>
+	<Button @click="login">登录</Button>
+	<Button @click="getUserInfo">获取用户信息</Button>
+	<p>{{ store.$state }}</p>
+</template>
+```
+
+=======
+
+> > > > > > > Stashed changes

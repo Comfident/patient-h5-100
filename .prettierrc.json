@@ -1,7 +1,6 @@
 {
-  "printWidth": 100,
-  "tabWidth": 2,
-  "useTabs": true,
+  "printWidth": 80,
+  "useTabs": false,
   "semi": false,
   "singleQuote": true,
   "trailingComma": "none",
@@ -9,8 +8,9 @@
   "bracketSameLine": true,
   "arrowParens": "always",
   "htmlWhitespaceSensitivity": "ignore",
-  "vueIndentScriptAndStyle": false,
+  "vueIndentScriptAndStyle": true,
   "endOfLine": "auto",
-  "singleAttributePerLine": false,
-  "trailingWhitespace": "none"
+  "singleAttributePerLine": true,
+  "trailingWhitespace": "none",
+  "prettier.htmlWhitespaceSensitivity": "ignore"
 }

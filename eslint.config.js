@@ -1,24 +1,15 @@
-import pluginVue from 'eslint-plugin-vue'
-import eslintConfigPrettier from 'eslint-config-prettier'
-export default [
-  // add more generic rulesets here, such as:
-  // js.configs.recommended,
-  ...pluginVue.configs['flat/recommended'],
-  // ...pluginVue.configs['flat/vue2-recommended'], // Use this if you are using Vue.js 2.x.
-  {
-    rules: {
+import globals from "globals";
+import pluginJs from "@eslint/js";
+import tseslint from "typescript-eslint";
+import pluginVue from "eslint-plugin-vue";
 
-      // override/add rules settings here, such as:
-      // 'vue/no-unused-vars': 'error'
-      'vue/multi-word-component-names': [
-        'warn',
-        {
-          ignores: ['index']
-        }
-      ],
-      'vue/no-setup-props-destructure': ['off'],
-      // 💡 添加未定义变量错误提示，create-vue@3.6.3 关闭，这里加上是为了支持下一个章节演示。
-      'no-undef': 'error'
-    }
-  }
-]
+
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  {files: ["**/*.{js,mjs,cjs,ts,vue}"]},
+  {languageOptions: { globals: globals.browser }},
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...pluginVue.configs["flat/essential"],
+  {files: ["**/*.vue"], languageOptions: {parserOptions: {parser: tseslint.parser}}},
+];

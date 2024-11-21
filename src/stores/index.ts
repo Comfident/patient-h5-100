@@ -7,5 +7,8 @@ const pinia = createPinia()
 // 持久化
 pinia.use(persist)
 
-// 导出
+// 导出pinia
 export default pinia
+
+// 导出user
+export * from './modules/user'
