@@ -87,27 +87,27 @@ pnpm install --save-dev eslint eslint-plugin-vue
 ```js
 import pluginVue from 'eslint-plugin-vue'
 export default [
-	...pluginVue.configs['flat/recommended'],
-	{
-		rules: {
-			'vue/no-unused-vars': 'error',
+  ...pluginVue.configs['flat/recommended'],
+  {
+    rules: {
+      'vue/no-unused-vars': 'error',
 
-			// 组件名称始终为多个单词，否则报警告
-			'vue/multi-word-component-names': [
-				'warn',
-				{
-					// 忽略index组件名，允许存在
-					ignores: ['index']
-				}
-			],
-			// 禁止使用导致传递给 setup 的 props 失去响应性的用法
-			// 原方法为 vue/no-setup-props-destructure 现已弃用
-			'vue/no-setup-props-reactivity-loss': ['off'],
+      // 组件名称始终为多个单词，否则报警告
+      'vue/multi-word-component-names': [
+        'warn',
+        {
+          // 忽略index组件名，允许存在
+          ignores: ['index']
+        }
+      ],
+      // 禁止使用导致传递给 setup 的 props 失去响应性的用法
+      // 原方法为 vue/no-setup-props-destructure 现已弃用
+      'vue/no-setup-props-reactivity-loss': ['off'],
 
-			// 未定义变量，报错
-			'no-undef': 'error'
-		}
-	}
+      // 未定义变量，报错
+      'no-undef': 'error'
+    }
+  }
 ]
 ```
 
@@ -120,10 +120,10 @@ export default [
 
 ```json
 {
-	"$schema": "https://json.schemastore.org/prettierrc",
-	"semi": false,
-	"singleQuote": true,
-	"printWidth": 100
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 100
 }
 ```
 
@@ -277,49 +277,49 @@ module.exports = {
 
 ```css
 :root {
-	/* 定义一系列颜色变量，用于问诊患者的界面设计 */
+  /* 定义一系列颜色变量，用于问诊患者的界面设计 */
 
-	/* 主要颜色，通常用于重要按钮或链接 */
-	--cp-primary: #16c2a3;
+  /* 主要颜色，通常用于重要按钮或链接 */
+  --cp-primary: #16c2a3;
 
-	/* 简单背景颜色，可能用于轻量级容器或卡片 */
-	--cp-plain: #eaf8f6;
+  /* 简单背景颜色，可能用于轻量级容器或卡片 */
+  --cp-plain: #eaf8f6;
 
-	/* 橙色，可能用于警告或需要用户注意的元素 */
-	--cp-orange: #fca21c;
+  /* 橙色，可能用于警告或需要用户注意的元素 */
+  --cp-orange: #fca21c;
 
-	/* 文本颜色1，通常用于最重要的标题或文本 */
-	--cp-text1: #121826;
+  /* 文本颜色1，通常用于最重要的标题或文本 */
+  --cp-text1: #121826;
 
-	/* 文本颜色2，可能用于副标题或次要文本 */
-	--cp-text2: #3c3e42;
+  /* 文本颜色2，可能用于副标题或次要文本 */
+  --cp-text2: #3c3e42;
 
-	/* 文本颜色3，可能用于辅助信息或小号文本 */
-	--cp-text3: #6f6f6f;
+  /* 文本颜色3，可能用于辅助信息或小号文本 */
+  --cp-text3: #6f6f6f;
 
-	/* 标签颜色，可能用于分类标签或小图标文字 */
-	--cp-tag: #848484;
+  /* 标签颜色，可能用于分类标签或小图标文字 */
+  --cp-tag: #848484;
 
-	/* 深色色调，可能用于分隔线或次级按钮 */
-	--cp-dark: #979797;
+  /* 深色色调，可能用于分隔线或次级按钮 */
+  --cp-dark: #979797;
 
-	/* 提示颜色，可能用于提示性文字或图标 */
-	--cp-tip: #c3c3c5;
+  /* 提示颜色，可能用于提示性文字或图标 */
+  --cp-tip: #c3c3c5;
 
-	/* 禁用状态颜色，用于表示不可点击或不可用的元素 */
-	--cp-disable: #d9dbde;
+  /* 禁用状态颜色，用于表示不可点击或不可用的元素 */
+  --cp-disable: #d9dbde;
 
-	/* 分隔线颜色，用于划分不同内容区域 */
-	--cp-line: #ededed;
+  /* 分隔线颜色，用于划分不同内容区域 */
+  --cp-line: #ededed;
 
-	/* 背景颜色，用于页面或组件的背景 */
-	--cp-bg: #f6f7f9;
+  /* 背景颜色，用于页面或组件的背景 */
+  --cp-bg: #f6f7f9;
 
-	/* 价格颜色，用于显示价格信息 */
-	--cp-price: #eb5757;
+  /* 价格颜色，用于显示价格信息 */
+  --cp-price: #eb5757;
 
-	/* 覆盖vant UI库的主要颜色，将其设置为自定义的主要颜色 */
-	--van-primary-color: var(--cp-primary);
+  /* 覆盖vant UI库的主要颜色，将其设置为自定义的主要颜色 */
+  --van-primary-color: var(--cp-primary);
 }
 ```
 
@@ -329,15 +329,15 @@ module.exports = {
 <script setup lang="ts"></script>
 
 <template>
-	<!-- 测试vant颜色覆盖是否生效 -->
-	<van-button type="primary">你好</van-button>
-	<a href="#">你好</a>
+  <!-- 测试vant颜色覆盖是否生效 -->
+  <van-button type="primary">你好</van-button>
+  <a href="#">你好</a>
 </template>
 
 <style scoped lang="scss">
-a {
-	color: var(--cp-primary);
-}
+  a {
+    color: var(--cp-primary);
+  }
 </style>
 ```
 
@@ -376,11 +376,11 @@ a {
 
 ```typescript
 export type User = {
-	token: string // 令牌
-	id: string // 用户ID
-	account: string // 用户名
-	mobile: string // 手机号
-	avatar: string // 头像URL
+  token: string // 令牌
+  id: string // 用户ID
+  account: string // 用户名
+  mobile: string // 手机号
+  avatar: string // 头像URL
 }
 ```
 
@@ -394,20 +394,20 @@ import { defineStore } from 'pinia'
 import type { User } from '@/types/user'
 
 export const useUserStore = defineStore('cp-user', () => {
-	// 存储当前用户状态
-	const user = ref<User>()
+  // 存储当前用户状态
+  const user = ref<User>()
 
-	// 设置用户信息
-	const setUser = (u: User) => {
-		user.value = u
-	}
+  // 设置用户信息
+  const setUser = (u: User) => {
+    user.value = u
+  }
 
-	// 清空用户状态
-	const delUser = () => {
-		user.value = undefined
-	}
+  // 清空用户状态
+  const delUser = () => {
+    user.value = undefined
+  }
 
-	return { user, setUser, delUser }
+  return { user, setUser, delUser }
 })
 ```
 
@@ -435,45 +435,47 @@ import { defineStore } from 'pinia'
 import type { User } from '@/types/user'
 
 export const useUserStore = defineStore(
-	'cp-user',
-	() => {
-		// 存储当前用户状态
-		const user = ref<User>()
+  'cp-user',
+  () => {
+    // 存储当前用户状态
+    const user = ref<User>()
 
-		// 设置用户信息
-		const setUser = (u: User) => {
-			user.value = u
-		}
+    // 设置用户信息
+    const setUser = (u: User) => {
+      user.value = u
+    }
 
-		// 清空用户状态
-		const delUser = () => {
-			user.value = undefined
-		}
+    // 清空用户状态
+    const delUser = () => {
+      user.value = undefined
+    }
 
-		return { user, setUser, delUser }
-	},
-	// 持久化
-	{
-		persist: true
-	}
+    return { user, setUser, delUser }
+  },
+  // 持久化
+  {
+    persist: true
+  }
 )
 ```
 
 在 `App.vue` 中测试持久化
 
 ```html
-<script setup lang="ts">
-	import { useUserStore } from './stores/user'
-	const store = useUserStore()
+<script
+  setup
+  lang="ts">
+  import { useUserStore } from './stores/user'
+  const store = useUserStore()
 </script>
 
 <template>
-	<p>{{ store.user }}</p>
-	<button
-		@click="store.setUser({ id: '11', mobile: '12', account: '13', avatar: '14', token: '15' })">
-		登录
-	</button>
-	<button @click="store.delUser()">退出</button>
+  <p>{{ store.user }}</p>
+  <button
+    @click="store.setUser({ id: '11', mobile: '12', account: '13', avatar: '14', token: '15' })">
+    登录
+  </button>
+  <button @click="store.delUser()">退出</button>
 </template>
 ```
 
@@ -565,28 +567,28 @@ $ git commit -m "user仓库建立，数据持久化"
 
 ```typescript
 export type User = {
-	// 令牌
-	token: string
+  // 令牌
+  token: string
 
-	// 用户ID
-	id: string
+  // 用户ID
+  id: string
 
-	// 用户名
-	account: string
+  // 用户名
+  account: string
 
-	// 手机号
-	mobile: string
+  // 手机号
+  mobile: string
 
-	// 头像URL
-	avatar: string
+  // 头像URL
+  avatar: string
 
-	// 账户
-	account: string
+  // 账户
+  account: string
 
-	// 刷新令牌
-	refreshToken: string
+  // 刷新令牌
+  refreshToken: string
 
-	token: string
+  token: string
 }
 ```
 
@@ -600,20 +602,20 @@ import { defineStore } from 'pinia'
 import type { User } from '@/types/user'
 
 export const useUserStore = defineStore('cp-user', () => {
-	// 存储当前用户状态
-	const user = ref<User>()
+  // 存储当前用户状态
+  const user = ref<User>()
 
-	// 设置用户信息
-	const setUser = (u: User) => {
-		user.value = u
-	}
+  // 设置用户信息
+  const setUser = (u: User) => {
+    user.value = u
+  }
 
-	// 清空用户状态
-	const delUser = () => {
-		user.value = undefined
-	}
+  // 清空用户状态
+  const delUser = () => {
+    user.value = undefined
+  }
 
-	return { user, setUser, delUser }
+  return { user, setUser, delUser }
 })
 ```
 
@@ -641,45 +643,47 @@ import { defineStore } from 'pinia'
 import type { User } from '@/types/user'
 
 export const useUserStore = defineStore(
-	'cp-user',
-	() => {
-		// 存储当前用户状态
-		const user = ref<User>()
+  'cp-user',
+  () => {
+    // 存储当前用户状态
+    const user = ref<User>()
 
-		// 设置用户信息
-		const setUser = (u: User) => {
-			user.value = u
-		}
+    // 设置用户信息
+    const setUser = (u: User) => {
+      user.value = u
+    }
 
-		// 清空用户状态
-		const delUser = () => {
-			user.value = undefined
-		}
+    // 清空用户状态
+    const delUser = () => {
+      user.value = undefined
+    }
 
-		return { user, setUser, delUser }
-	},
-	// 持久化
-	{
-		persist: true
-	}
+    return { user, setUser, delUser }
+  },
+  // 持久化
+  {
+    persist: true
+  }
 )
 ```
 
 在 `App.vue` 中测试持久化
 
 ```html
-<script setup lang="ts">
-	import { useUserStore } from './stores/user'
-	const store = useUserStore()
+<script
+  setup
+  lang="ts">
+  import { useUserStore } from './stores/user'
+  const store = useUserStore()
 </script>
 
 <template>
-	<p>{{ store.user }}</p>
-	<button
-		@click="store.setUser({ id: '11', mobile: '12', account: '13', avatar: '14', token: '15' })">
-		登录
-	</button>
-	<button @click="store.delUser()">退出</button>
+  <p>{{ store.user }}</p>
+  <button
+    @click="store.setUser({ id: '11', mobile: '12', account: '13', avatar: '14', token: '15' })">
+    登录
+  </button>
+  <button @click="store.delUser()">退出</button>
 </template>
 ```
 
@@ -825,21 +829,21 @@ const baseURL = 'https://consult-api.itheima.net/'
 
 // 1. axios实例，基础配置
 const instance = axios.create({
-	baseURL: baseURL,
-	timeout: 10000
+  baseURL: baseURL,
+  timeout: 10000
 })
 
 // 2. 请求拦截器给config携带token
 instance.interceptors.request.use(
-	(config) => {
-		const store = useUserStore()
-		if (store.user?.token && config.headers) {
-			// 用户存在且有token 且 config有headers，则给headers新增属性Authorization
-			config.headers['Authorization'] = `Bearer ${store.user?.token}`
-		}
-		return config
-	},
-	(err) => Promise.reject(err)
+  (config) => {
+    const store = useUserStore()
+    if (store.user?.token && config.headers) {
+      // 用户存在且有token 且 config有headers，则给headers新增属性Authorization
+      config.headers['Authorization'] = `Bearer ${store.user?.token}`
+    }
+    return config
+  },
+  (err) => Promise.reject(err)
 )
 ```
 
@@ -848,28 +852,28 @@ instance.interceptors.request.use(
 ```ts
 // 3. 响应拦截器，剥离无效数据，401拦截
 instance.interceptors.response.use(
-	(res) => {
-		// 后台约定，响应成功，但是code不是10000，是业务逻辑失败
-		if (res.data?.code !== 10000) {
-			showToast(res.data?.message || '业务失败')
-			return Promise.reject(res.data)
-		}
-		// 业务逻辑成功，返回响应数据，作为axios成功的结果
-		return res.data
-	},
-	(err) => {
-		if (err.response.status === 401) {
-			// 删除用户信息
-			const store = useUserStore()
-			store.delUser()
-			// 跳转登录，带上接口失效所在页面的地址，登录完成后回跳使用
-			router.push({
-				path: '/login',
-				query: { returnUrl: router.currentRoute.value.fullPath }
-			})
-		}
-		return Promise.reject(err)
-	}
+  (res) => {
+    // 后台约定，响应成功，但是code不是10000，是业务逻辑失败
+    if (res.data?.code !== 10000) {
+      showToast(res.data?.message || '业务失败')
+      return Promise.reject(res.data)
+    }
+    // 业务逻辑成功，返回响应数据，作为axios成功的结果
+    return res.data
+  },
+  (err) => {
+    if (err.response.status === 401) {
+      // 删除用户信息
+      const store = useUserStore()
+      store.delUser()
+      // 跳转登录，带上接口失效所在页面的地址，登录完成后回跳使用
+      router.push({
+        path: '/login',
+        query: { returnUrl: router.currentRoute.value.fullPath }
+      })
+    }
+    return Promise.reject(err)
+  }
 )
 
 export { baseURL, instance }
@@ -942,6 +946,5 @@ const login = async () => {
 </template>
 ```
 
-=======
-
-> > > > > > > Stashed changes
+以后eslint，我只用官方文当，就当我前面的eslint-plugin-vue是在放屁，那个都不支持最新的扁平化了...
+https://eslint.nodejs.cn/

@@ -12,15 +12,18 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     AutoImport({
-      resolvers: [VantResolver()],
+      resolvers: [VantResolver()]
     }),
     Components({
-      resolvers: [VantResolver()],
-    }),
+      dts: false,
+      resolvers: [VantResolver()]
+      // 禁用样式
+      // resolvers: [VantResolver({ importStyle: false })]
+    })
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-    },
-  },
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
 })
