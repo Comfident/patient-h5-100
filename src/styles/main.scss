@@ -62,3 +62,8 @@
    margin: 0;
    padding: 0;
  }
+//  加载进度条颜色
+ #nprogress .bar {
+   background-color: var(--cp-primary) !important;
+ }
+ 

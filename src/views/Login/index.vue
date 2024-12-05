@@ -9,7 +9,7 @@
   import { useUserStore } from '@/stores'
   import { onUnmounted, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-import { showToast } from 'vant'
+  import { showToast } from 'vant'
 
   const route = useRoute()
   const router = useRouter()

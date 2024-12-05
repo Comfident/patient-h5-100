@@ -1,29 +1,30 @@
 # 登录模块
+
 ![alt text](./assets/image.png)
 
 ## 约定路由规则
 
-| 路由路径 | 	路由级别 | 组件功能 |
-|  ----   | ----       | ---      |
-| /login  | 	1       |   登录   |
-|    /    |    1       |  布局容器 |
-|  /user/patient   |    1       |  	家庭档案 |
-|  /consult/fast    |    1       |  快速问诊 |
-| /consult/dep   |    1       |  选择科室|
-|  /consult/illness  |    1       |  病情描述 |
-| /consult/pay   |    1       |  问诊支付 |
-|/room  |    1       | 问诊室 |
-| /user/consult   |    1       |  	我的问诊 |
-| /user/consult/:id   |    1       |  问诊详情 |
-|/order/pay   |    1       | 	药品订单支付 |
-| /order/pay/result   |    1       | 药品订单支付结果 |
-| /order/:id   |    1       | 药品订单详情 |
-| /order/logistics/:id  |    1       | 药品订单物流 |
-| /login/callback |    1       |  	QQ登录回跳 |
-| /user   |    2      |  个人中心 |
-| /home  |    2      |  首页 |
-|/article   |    2      |  健康百科 |
-| /notify   |    2      |  消息通知 |
+| 路由路径             | 路由级别 | 组件功能         |
+| -------------------- | -------- | ---------------- |
+| /login               | 1        | 登录             |
+| /                    | 1        | 布局容器         |
+| /user/patient        | 1        | 家庭档案         |
+| /consult/fast        | 1        | 快速问诊         |
+| /consult/dep         | 1        | 选择科室         |
+| /consult/illness     | 1        | 病情描述         |
+| /consult/pay         | 1        | 问诊支付         |
+| /room                | 1        | 问诊室           |
+| /user/consult        | 1        | 我的问诊         |
+| /user/consult/:id    | 1        | 问诊详情         |
+| /order/pay           | 1        | 药品订单支付     |
+| /order/pay/result    | 1        | 药品订单支付结果 |
+| /order/:id           | 1        | 药品订单详情     |
+| /order/logistics/:id | 1        | 药品订单物流     |
+| /login/callback      | 1        | QQ登录回跳       |
+| /user                | 2        | 个人中心         |
+| /home                | 2        | 首页             |
+| /article             | 2        | 健康百科         |
+| /notify              | 2        | 消息通知         |
 
 `/user`、`/home`、 `/article`、 `/notify` 是二级路由，即登录后主页面进行切换的四个路由
 
@@ -77,7 +78,7 @@ export default router
 
 ```vue
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router'
 
   const router = useRouter()
 
@@ -90,7 +91,7 @@ import { useRouter } from 'vue-router';
   }
 
   defineProps<{
-    title?: string,
+    title?: string
     rightText?: string
   }>()
 
@@ -157,3 +158,11 @@ import { useRouter } from 'vue-router';
 ```
 
 ```
+
+出现的一个问题：vant的showToast样式突然没了：
+原来是https://github.com/youzan/vant/issues/12709
+自动导入才会导入相应的样式，所以你需要把手动导入的代码移除。
+![alt text](image.png)
+
+aria-hidden
+装饰性元素：如果SVG图标仅仅是为了装饰目的，并不包含重要的交互信息或内容，那么设置 aria-hidden="true" 是合适的。
