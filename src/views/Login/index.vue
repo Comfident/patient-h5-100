@@ -9,7 +9,6 @@
   import { useUserStore } from '@/stores'
   import { onUnmounted, ref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
-  import { showToast } from 'vant'
 
   const route = useRoute()
   const router = useRouter()
@@ -59,8 +58,7 @@
 
     const res = await sendMobileCode(mobile.value, 'login')
 
-    showSuccessToast(`发送成功，验证码为${res.data.code}`)
-    console.log(res.data.code)
+    showSuccessToast(`发送成功，验证码为${res.data?.code}`)
 
     // 倒计时
     time.value = 60

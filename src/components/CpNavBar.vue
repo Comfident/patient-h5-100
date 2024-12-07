@@ -1,20 +1,28 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router'
+
+  const props = defineProps<{
+    title?: string
+    rightText?: string
+
+    // back是一个返回函数，在PatientPage中的cp-nav-bar的back是一个将show赋值为false的函数
+    back?: () => void
+  }>()
 
   const router = useRouter()
 
+  // 历史记录回退
   const onClickLeft = () => {
+    if (props.back) {
+      // 调用传进来的back函数
+      return props.back()
+    }
     if (history.state?.back) {
       router.back()
     } else {
       router.push('/')
     }
   }
-
-  defineProps<{
-    title?: string,
-    rightText?: string
-  }>()
 
   const emit = defineEmits<{
     'click-right': []
@@ -50,5 +58,3 @@ import { useRouter } from 'vue-router';
     }
   }
 </style>
-
-
